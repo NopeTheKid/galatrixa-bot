@@ -124,7 +124,10 @@ module.exports = {
       return;
     }
     const dispatcher = serverQueue.connection
-      .play(ytdl(song.url,{quality: "highestaudio"}))
+      .play(ytdl(song.url,{
+        quality: "highestaudio",
+        highWaterMark: 1 << 25
+      }))
       .on("finish", () => {
         console.log()
         if(serverQueue.loopQ)
@@ -171,7 +174,7 @@ module.exports = {
         if(song.title)
           serverQueue.textChannel.send(`${song.title} has been added to the queue!`);
         else
-        serverQueue.textChannel.send(`Playlist has been added to the queue!`);
+          serverQueue.textChannel.send(`Playlist has been added to the queue!`);
       }
   },formatDuration(durationObj) {
     const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
