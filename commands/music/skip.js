@@ -7,12 +7,14 @@ module.exports = {
 		if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');
 		if (!serverQueue) return message.channel.send('There is no song that I could skip!');
 
-		if(serverQueue.loopQ)
-          serverQueue.songs.push(serverQueue.songs[0]);
-        if(!serverQueue.loopM)
+		if(serverQueue.loopQ){
+		  serverQueue.songs.push(serverQueue.songs[0]);
+		  serverQueue.songs.pop(0);
+		}
+        if(serverQueue.loopM){		
+		  serverQueue.songs.unshift(serverQueue.songs[0]);
 		  serverQueue.songs.shift();
-		else
-		  serverQueue.songs.unshift();
+		}
 		  
 		serverQueue.connection.dispatcher.end();
 	},
