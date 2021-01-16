@@ -15,21 +15,21 @@ module.exports = {
 
         //find member
         if ( !rMember )
-            return message.reply("Couldn't find that member!").then(m => m.delete(5000));
+            return message.reply("Couldn't find that member!");
 
         //check if author has permission and if the member is a bot
         if ( !rAuthor.hasPermission("BAN_MEMBERS") || rMember.user.bot )
-            return message.reply("Can't report that member!").then(m => m.delete(5000));
+            return message.reply("Can't report that member!");
 
         //check reason
         if ( !args[1] )
-            return message.channel.send("Please provide a reason for the report!").then(m => m.delete(5000));
+            return message.channel.send("Please provide a reason for the report!");
 
         const channel = message.guild.channels.cache.find(channel => channel.name === "reports");
 
         //check if text channel #reports exist
         if ( !channel )
-            return message.channel.send("Couldn't find a \`#reports\` channel!").then(m => m.delete(5000));
+            return message.channel.send("Couldn't find a \`#reports\` channel!");
 
         const embed = new MessageEmbed()
             .setColor("$ff0000")

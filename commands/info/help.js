@@ -11,7 +11,7 @@ module.exports = {
         /*if (message.deletable)
             message.delete();
 
-        message.reply("This command isn't available while under maintenance, please try again later! 🙂").then(m => m.delete(5000));*/
+        message.reply("This command isn't available while under maintenance, please try again later! 🙂");*/
         if ( args[0] ) {
             return getCMD(client, message, args[0]);
         }
