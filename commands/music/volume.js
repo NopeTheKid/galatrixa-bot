@@ -17,7 +17,7 @@ module.exports = {
             return [message.delete(), message.channel.send(`${message.author}, please input a volume between 0 and 100!`)];
 
         queue.volume = args[0];
-        queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
+        queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 39);
 
         return message.channel.send(`🎵 Volume has now been set to **${queue.volume}/100**`);
 	},
