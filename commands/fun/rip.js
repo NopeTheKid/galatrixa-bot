@@ -50,7 +50,7 @@ module.exports = {
           this.play(message, serverQueue.songs[0]);
         })
         .on("error", error => console.error(error));
-      dispatcher.setVolumeLogarithmic(serverQueue.volume / 39);
+      dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
       serverQueue.textChannel.send(`Start playing: **${song.title}**`);
     },async addQueue(song,serverQueue, message){ //add music to the queue
         /****************************************************************** */
@@ -69,7 +69,7 @@ module.exports = {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: 100,
+            volume: 5,
             playing: true
           };
   
