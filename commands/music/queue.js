@@ -9,7 +9,7 @@ module.exports = {
         if(serverQueue){    
             const embed = new MessageEmbed()
                 .setColor('#e9f931')
-                .setTitle('Choose a song by commenting a number between 1 and 5');
+                .setTitle('Queue');
             let i=1;
             serverQueue.songs.forEach(song => {
                 embed.addField('#'+i,song.title+" ("+song.url+")");
