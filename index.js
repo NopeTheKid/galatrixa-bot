@@ -33,25 +33,51 @@ client.once('ready', () => {
 		}
 	});
 
+	/*
+	 *	PALAVRA DO DIA
+	 */
 	let channel = client.channels.cache.find(channel => channel.name === "palavra-do-dia");	
 	//let channel = client.channels.cache.find(channel => channel.name === "bot-test"); // DEBUG
-	const cronDate = '00 08 * * *';
 	
+	const cronDate = '00 08 * * *';
 	//console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------"); // DEBUG
 	
+	// Create cron job por posting everyday at 8AM
 	cron.schedule(cronDate, () =>{
 		palavraDia.sendPalavraDia(channel, true);
 	}, {
 		scheduled:true, 
 		timezone:"Atlantic/Madeira"
-	})
-	palavraDia.sendPalavraDia(channel, true);
-	
+	});
+		
 	/* DEBUG
 	setInterval(() => {
 		console.log(new Date);
 	},1000);
 	*/
+	
+	// Check last message
+	let pDiaPosted = false;
+	channel.messages.fetch({ limit: 1 }).then(messages => {
+		//Iterate through the messages here with the variable "messages".
+		messages.forEach(message => {
+			// Check if already posted
+			if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds[0].title == "Palavra do Dia"){
+				const today = new Date();
+				if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
+					pDiaPosted = true;
+				}
+			}
+
+			// If not posted, post
+			if(pDiaPosted==false){
+				palavraDia.sendPalavraDia(channel, true);
+			}
+		});
+	});
+	/*
+	 *	/PALAVRA DO DIA
+	 */
 });
 
 client.once('reconnecting', () => {
