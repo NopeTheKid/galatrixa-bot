@@ -1,10 +1,13 @@
 const fs = require('fs')
 const {Collection} = require('discord.js');
 const Client = require('./client/Client');
+const palavraDia = require('./palavra_dia/palavra_dia.js');
+var cron = require("node-cron");
 const {
 	prefix,
 	token,
 } = require('./config.json');
+const { channel } = require('diagnostics_channel');
 
 const client = new Client({
 	disableEveryone: false
@@ -28,7 +31,24 @@ client.once('ready', () => {
 		activity: {
 		  name: ".help"
 		}
-	  });
+	});
+
+	let channel = client.channels.cache.find(channel => channel.name === "palavra-do-dia");	
+	//let channel = client.channels.cache.find(channel => channel.name === "bot-test"); // DEBUG
+	const cronDate = '00 08 * * *';
+	console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------");
+	cron.schedule(cronDate, () =>{
+		palavraDia.sendPalavraDia(channel, true);
+	}, {
+		scheduled:true, 
+		timezone:"Atlantic/Madeira"
+	});
+	
+	/* DEBUG
+	setInterval(() => {
+		console.log(new Date);
+	},1000);
+	*/
 });
 
 client.once('reconnecting', () => {
@@ -62,6 +82,5 @@ client.on('message', async message => {
 	};
 	if (command) command.run(client, message, args, ops);
 });
-
 
 client.login(token);
