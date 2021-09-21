@@ -36,13 +36,16 @@ client.once('ready', () => {
 	let channel = client.channels.cache.find(channel => channel.name === "palavra-do-dia");	
 	//let channel = client.channels.cache.find(channel => channel.name === "bot-test"); // DEBUG
 	const cronDate = '00 08 * * *';
-	console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------");
+	
+	//console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------"); // DEBUG
+	
 	cron.schedule(cronDate, () =>{
 		palavraDia.sendPalavraDia(channel, true);
 	}, {
 		scheduled:true, 
 		timezone:"Atlantic/Madeira"
-	});
+	})
+	palavraDia.sendPalavraDia(channel, true);
 	
 	/* DEBUG
 	setInterval(() => {
