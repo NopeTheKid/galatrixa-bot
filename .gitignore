@@ -3,3 +3,6 @@ node_modules/
 
 # Ignore config file
 config.json
+
+# ignore img folder
+img/

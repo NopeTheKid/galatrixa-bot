@@ -30,7 +30,7 @@ module.exports = {
             }
         
             .app {
-                max-width: 500px;
+                max-width: 700px;
                 padding: 20px;
                 display: flex;
                 flex-direction: row;
@@ -40,7 +40,7 @@ module.exports = {
             }
         
             img {
-                width: 50px;
+                width: 70px;
                 margin-right: 20px;
                 border-radius: 50%;
                 border: 1px solid #fff;
@@ -58,7 +58,7 @@ module.exports = {
             encoding: 'buffer',
             });
         
-            fs.writeFile('palavraDia.png', images, 'buffer', function(err){
+            fs.writeFile('img/palavraDia.png', images, 'buffer', function(err){
             if (err) throw err
             console.log('File saved.')
             });
@@ -66,8 +66,9 @@ module.exports = {
             let embed = new MessageEmbed()
             .setColor("#ff0000")
             .setTitle(`Palavra do Dia`)
-            .attachFiles('palavraDia.png')
-            .setImage('attachment://palavraDia.png');
+            .attachFiles('img/palavraDia.png')
+            .setImage('attachment://palavraDia.png')
+            .setTimestamp();;
 
             if(announce)
                 channel.send(embed)

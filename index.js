@@ -38,11 +38,11 @@ client.once('ready', () => {
 	 */
 	let channel = client.channels.cache.find(channel => channel.name === "palavra-do-dia");	
 	//let channel = client.channels.cache.find(channel => channel.name === "bot-test"); // DEBUG
-	
+		
+	// Create cron job por posting everyday at 8AM
 	const cronDate = '00 08 * * *';
 	//console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------"); // DEBUG
-	
-	// Create cron job por posting everyday at 8AM
+
 	cron.schedule(cronDate, () =>{
 		palavraDia.sendPalavraDia(channel, true);
 	}, {
