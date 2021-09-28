@@ -1,6 +1,5 @@
 const { DOMParser } = require('xmldom');
 const { MessageEmbed } = require("discord.js");
-var convert = require('xml-js');
 let Parser = require('rss-parser');
 const nodeHtmlToImage = require('node-html-to-image');
 const fs = require('fs');
@@ -18,6 +17,13 @@ module.exports = {
 
             let xmlDoc = new DOMParser().parseFromString(palavraDia,"text/html");
             let xml = xmlDoc.getElementsByTagName("div")[0].childNodes[1].childNodes[1];
+            
+            // Gets length of the word to set the dimensions
+            let wordLength = xml.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].length;
+            let imgWidth = 300;
+
+            if(wordLength * 17 > imgWidth)
+                imgWidth = wordLength * 17;
         
             palavraDia = `<html lang="en"><head><meta charset="UTF-8" />
             <style>
@@ -25,8 +31,8 @@ module.exports = {
                 font-family: "Poppins", Arial, Helvetica, sans-serif;
                 background: rgb(22, 22, 22);
                 color: #fff;
-                max-width: 300px;
-                max-height: 50%;
+                max-width: `+imgWidth+`px;
+                max-height: 60%;
             }
         
             .app {
@@ -75,7 +81,7 @@ module.exports = {
                     .then(message => message.crosspost());
             else
                 channel.send(embed);
-        
+       
         })();
 
     }
