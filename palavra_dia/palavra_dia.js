@@ -64,7 +64,7 @@ module.exports = {
             encoding: 'buffer',
             });
         
-            fs.writeFile('img/palavraDia.png', images, 'buffer', function(err){
+            await fs.writeFile('img/palavraDia.png', images, 'buffer', function(err){
             if (err) throw err
             console.log('File saved.')
             });
