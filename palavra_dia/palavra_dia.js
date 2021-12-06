@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js");
 let Parser = require('rss-parser');
 const nodeHtmlToImage = require('node-html-to-image');
 const fs = require('fs');
+const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 let parser = new Parser();
 module.exports = {
     sendPalavraDia: function (channel, announce){

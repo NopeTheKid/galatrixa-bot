@@ -70,7 +70,7 @@ client.once('ready', () => {
 			}
 
 			// If not posted, post
-			if(pDiaPosted==false){
+			if(pDiaPosted==false && today.getHours() > 8){
 				palavraDia.sendPalavraDia(channel, true);
 			}
 		});
