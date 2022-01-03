@@ -42,7 +42,7 @@ client.once('ready', () => {
 	// Create cron job por posting everyday at 8AM
 	const cronDate = '00 08 * * *';
 	//console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------"); // DEBUG
-
+	let today = new Date();
 	cron.schedule(cronDate, () =>{
 		palavraDia.sendPalavraDia(channel, true);
 	}, {
@@ -62,13 +62,13 @@ client.once('ready', () => {
 		//Iterate through the messages here with the variable "messages".
 		messages.forEach(message => {
 			// Check if already posted
-			if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds[0].title == "Palavra do Dia"){
+			if(Array.isArray(message.embeds) && message.embeds != undefined && !embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
 				const today = new Date();
 				if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
 					pDiaPosted = true;
 				}
 			}
-
+			//pDiaPosted=false;
 			// If not posted, post
 			if(pDiaPosted==false && today.getHours() > 8){
 				palavraDia.sendPalavraDia(channel, true);
@@ -113,3 +113,12 @@ client.on('message', async message => {
 });
 
 client.login(token);
+
+/** FUNCTIONS */
+
+/** Check if message embed has an image attached 
+ *  Returns true if has message
+*/
+function embedHasImage(msgEmbed) {
+    return msgEmbed.image != null;
+}
