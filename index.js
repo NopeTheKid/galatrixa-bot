@@ -62,8 +62,7 @@ client.once('ready', () => {
 		//Iterate through the messages here with the variable "messages".
 		messages.forEach(message => {
 			// Check if already posted
-			if(Array.isArray(message.embeds) && message.embeds != undefined && !embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
-				const today = new Date();
+			if(Array.isArray(message.embeds) && message.embeds != undefined && embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
 				if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
 					pDiaPosted = true;
 				}
