@@ -23,6 +23,7 @@ const active = new Map();
 ["command"].forEach(handler => {
 	require(`./handler/${handler}`)(client);
 });
+
 client.once('ready', () => {
 	console.log('Ready!');
 	
@@ -79,12 +80,20 @@ client.once('ready', () => {
 	 */
 });
 
-client.once('reconnecting', () => {
+client.on('reconnecting', () => {
 	console.log('Reconnecting!');
 });
 
-client.once('disconnect', () => {
+client.on('disconnect', message => {
 	console.log('Disconnect!');
+});
+
+/** Delete music queue on disconnect */
+client.on('voiceStateUpdate', (oldState, newState) => { 
+	if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
+	if (newState.id !== client.user.id) return;
+	const serverQueue = oldState.queue.get(message.guild.id);
+	return serverQueue.songs = [];
 });
 
 client.on('message', async message => {
