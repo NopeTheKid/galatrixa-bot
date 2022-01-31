@@ -70,6 +70,8 @@ module.exports = {
             console.log('File saved.')
             });
         
+	    setTimeout(function(){}, 5000);
+
             let embed = new MessageEmbed()
             .setColor("#ff0000")
             .setTitle(`Palavra do Dia`)

@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {Collection} = require('discord.js');
+const {Collection, GuildMember} = require('discord.js');
 const Client = require('./client/Client');
 const palavraDia = require('./palavra_dia/palavra_dia.js');
 var cron = require("node-cron");
@@ -84,7 +84,7 @@ client.on('reconnecting', () => {
 	console.log('Reconnecting!');
 });
 
-client.on('disconnect', message => {
+client.on('disconnect', () => {
 	console.log('Disconnect!');
 });
 
@@ -92,7 +92,9 @@ client.on('disconnect', message => {
 client.on('voiceStateUpdate', (oldState, newState) => { 
 	if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
 	if (newState.id !== client.user.id) return;
-	const serverQueue = oldState.queue.get(message.guild.id);
+	const serverQueue = oldState.queue.get(oldState.guild.id);
+	fs.writeFile("./logs.txt",oldState);
+	print(oldState);
 	return serverQueue.songs = [];
 });
 
