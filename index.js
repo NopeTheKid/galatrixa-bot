@@ -42,7 +42,7 @@ client.once('ready', () => {
 		
 	// Create cron job por posting everyday at 8AM
 	const cronDate = '00 08 * * *';
-	//console.log("-----------------------\nconDate: "+cron.validate(cronDate)+"\n-----------------------"); // DEBUG
+	
 	let today = new Date();
 	cron.schedule(cronDate, () =>{
 		palavraDia.sendPalavraDia(channel, true);
@@ -50,13 +50,7 @@ client.once('ready', () => {
 		scheduled:true, 
 		timezone:"Atlantic/Madeira"
 	});
-		
-	/* DEBUG
-	setInterval(() => {
-		console.log(new Date);
-	},1000);
-	*/
-	
+
 	// Check last message
 	let pDiaPosted = false;
 	channel.messages.fetch({ limit: 1 }).then(messages => {
@@ -68,7 +62,6 @@ client.once('ready', () => {
 					pDiaPosted = true;
 				}
 			}
-			//pDiaPosted=false;
 			// If not posted, post
 			if(pDiaPosted==false && today.getHours() > 8){
 				palavraDia.sendPalavraDia(channel, true);

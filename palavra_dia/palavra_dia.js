@@ -64,13 +64,16 @@ module.exports = {
             },
             encoding: 'buffer',
             });
+
+            //Delete img
+            await fs.unlink('img/palavraDia.png');
         
             await fs.writeFile('img/palavraDia.png', images, 'buffer', function(err){
             if (err) throw err
             console.log('File saved.')
             });
         
-	    setTimeout(function(){}, 5000);
+	        setTimeout(function(){}, 5000);
 
             let embed = new MessageEmbed()
             .setColor("#ff0000")
