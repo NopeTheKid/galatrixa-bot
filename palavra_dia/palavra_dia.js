@@ -3,7 +3,6 @@ const { MessageEmbed } = require("discord.js");
 let Parser = require('rss-parser');
 const nodeHtmlToImage = require('node-html-to-image');
 const fs = require('fs');
-const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 let parser = new Parser();
 module.exports = {
     sendPalavraDia: function (channel, announce){
@@ -66,7 +65,12 @@ module.exports = {
             });
 
             //Delete img
-            await fs.unlink('img/palavraDia.png');
+            try{
+                fs.unlinkSync('/home/nopearino/bottas/galatrixa-bot/img/palavraDia.png');
+                console.log("Old image deleted");
+            }catch(e){
+                console.error(e);
+            }
         
             await fs.writeFile('img/palavraDia.png', images, 'buffer', function(err){
             if (err) throw err
@@ -80,7 +84,7 @@ module.exports = {
             .setTitle(`Palavra do Dia`)
             .attachFiles('img/palavraDia.png')
             .setImage('attachment://palavraDia.png')
-            .setTimestamp();;
+            .setTimestamp();
 
             if(announce)
                 channel.send(embed)
