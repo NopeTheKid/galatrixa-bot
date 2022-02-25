@@ -85,10 +85,10 @@ client.on('disconnect', () => {
 client.on('voiceStateUpdate', (oldState, newState) => { 
 	if (oldState.channelID === null || typeof oldState.channelID == 'undefined') return;
 	if (newState.id !== client.user.id) return;
-	const serverQueue = oldState.queue.get(oldState.guild.id);
-	fs.writeFile("./logs.txt",oldState);
-	print(oldState);
-	return serverQueue.songs = [];
+	const serverQueue = client.queue.get(oldState.guild.id);
+	if(serverQueue != undefined){
+		client.queue.delete(oldState.guild.id);
+	}
 });
 
 client.on('message', async message => {
