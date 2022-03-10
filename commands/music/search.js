@@ -4,6 +4,7 @@ const { MessageEmbed } = require("discord.js");
 const Youtube = require('simple-youtube-api');
 const { youtubeAPI } = require('../../config.json');
 const youtube = new Youtube(youtubeAPI);
+const {play,addQueue} = require("../../util/functions.js");
 
 module.exports = {
 	name: 'search',
@@ -81,7 +82,7 @@ module.exports = {
               duration,
               thumbnail
             };
-            this.addQueue(song,queue,message);
+            addQueue(song,queue,message);
         } catch (err) {
           // if something went wrong when calling the api:
           console.error(err);
@@ -93,61 +94,8 @@ module.exports = {
           );
         }
 	},
-    async play(message, song) {
-      const queue = message.client.queue;
-      const guild = message.guild;
-      const serverQueue = queue.get(message.guild.id);
-  
-      if (!song) {
-        serverQueue.voiceChannel.leave();
-        queue.delete(guild.id);
-        return;
-      }
-  
-      const dispatcher = serverQueue.connection
-        .play(ytdl(song.url,{
-          quality: "highestaudio",
-          filter: "audioonly",
-          highWaterMark: 1 << 25
-        }))
-        .on("finish", () => {
-          serverQueue.songs.shift();
-          this.play(message, serverQueue.songs[0]);
-        })
-        .on("error", error => console.error(error));
-      dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-      serverQueue.textChannel.send(`Start playing: **${song.title}**`);
-    },
     async addQueue(song,serverQueue, message){
-        if (!serverQueue) {
-            const voiceChannel = message.member.voice.channel;
-            const queue = message.client.queue;
-            const queueContruct = {
-                textChannel: message.channel,
-                voiceChannel: voiceChannel,
-                connection: null,
-                songs: [],
-                volume: 5,
-                playing: true
-            };
-    
-            queue.set(message.guild.id, queueContruct);
-    
-            queueContruct.songs.push(song);
-    
-            try {
-                var connection = await voiceChannel.join();
-                queueContruct.connection = connection;
-                this.play(message, queueContruct.songs[0]);
-            } catch (err) {
-                console.log(err);
-                queue.delete(message.guild.id);
-                return err;
-            }
-        } else {
-            serverQueue.songs.push(song);
-            serverQueue.textChannel.send(`${song.title} has been added to the queue!`);
-        }           
+        addQueue(song,serverQueue,message, false);         
     },formatDuration(durationObj) {
         const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
           durationObj.minutes ? durationObj.minutes : '00'

@@ -20,7 +20,7 @@ module.exports = {
             
             // Gets length of the word to set the dimensions
             let wordLength = xml.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].length;
-            let imgWidth = 300;
+            let imgWidth = 500;
 
             if(wordLength * 17 > imgWidth)
                 imgWidth = wordLength * 17;
