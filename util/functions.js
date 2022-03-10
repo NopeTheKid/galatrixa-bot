@@ -117,11 +117,15 @@ module.exports = {
 				serverQueue.songs.unshift(song);
 				serverQueue.textChannel.send(`${song.title} has been added to the queue!`);
 			}else{
+                i=0;
                 song.forEach(s => {
                     serverQueue.songs.push(s);
+                    i++;
                 });
                 if (song.title)
                     serverQueue.textChannel.send(`${song.title} has been added to the queue!`);
+                else if(i<=1)
+                    serverQueue.textChannel.send(`${song[0].title} has been added to the queue!`);
                 else
                     serverQueue.textChannel.send(`Playlist has been added to the queue!`);
             }
