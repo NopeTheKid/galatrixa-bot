@@ -20,7 +20,7 @@ module.exports = {
 			;
 		//adds song to the queue
 		const queue = message.client.queue.get(message.guild.id);
-		let url = "https://youtu.be/5cl-vUtkKeo";
+		let url = "https://youtu.be/vp4CZQsmhhE";
 		const song = {
 			url,
 			title
