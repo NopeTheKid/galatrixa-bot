@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/rubenteixeira10/GalatrixaBot#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.6.0",
+    "@discordjs/opus": "^0.8.0",
     "ascii-table": "^0.0.9",
     "axios": "^0.21.2",
     "common-tags": "^1.8.2",
