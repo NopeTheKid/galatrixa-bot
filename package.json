@@ -35,12 +35,16 @@
     "fluent-ffmpeg": "^2.1.2",
     "g": "^2.0.1",
     "n": "^6.7.0",
-    "node-cron": "^3.0.0",
+    "node-cron": "^3.0.1",
+    "node-html-to-image": "^3.2.4",
     "opusscript": "0.0.7",
     "patch-package": "^6.4.7",
+    "rss-parser": "^3.12.0",
     "simple-youtube": "^0.1.1",
     "simple-youtube-api": "^5.2.1",
+    "uuid": "^8.3.2",
     "ws": "^8.4.0",
+    "xmldom": "^0.6.0",
     "yt-search": "^2.10.3",
     "ytdl-core": "^4.9.2"
   }

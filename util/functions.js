@@ -35,8 +35,7 @@ module.exports = {
             target = message.guild.member(message.author);
 
         return target;
-    },
-    promptMessage: async function (message, author, time, validReactions) {
+    }, promptMessage: async function (message, author, time, validReactions) {
         time *= 1000;
 
         for (const reaction of validReactions)
@@ -65,7 +64,12 @@ module.exports = {
                 highWaterMark: 1 << 25
             }))
             .on("finish", () => {
-                serverQueue.songs.shift();
+                if(!serverQueue.loopM && !serverQueue.loopQ)
+                    serverQueue.songs.shift();
+                else if(serverQueue.loopQ){
+                    serverQueue.songs.push(serverQueue.songs[0]);
+                    serverQueue.songs.shift(); 
+                }
                 this.play(message, serverQueue.songs[0]);
             })
             .on("error", error => console.error(error));
