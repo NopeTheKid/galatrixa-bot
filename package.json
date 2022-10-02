@@ -8,19 +8,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "^14.x",
-    "npm": "^7.x"
+    "node": "^14.20",
+    "npm": "^8.19"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rubenteixeira10/GalatrixaBot.git"
+    "url": "git+https://github.com/NopeTheKid/galatrixa-bot.git"
   },
   "author": "Rúben Teixeira & Agostinho Carvalho",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rubenteixeira10/GalatrixaBot/issues"
+    "url": "https://github.com/NopeTheKid/galatrixa-bot/issues"
   },
-  "homepage": "https://github.com/rubenteixeira10/GalatrixaBot#readme",
+  "homepage": "https://github.com/NopeTheKid/galatrixa-bot#readme",
   "dependencies": {
     "@discordjs/opus": "^0.8.0",
     "ascii-table": "^0.0.9",
