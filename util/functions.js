@@ -113,7 +113,7 @@ module.exports = {
                 /**     THIS METHOD IS MODIFIED FOR THIS SPECIAL OCASION            */
                 /**     ADDING A SONG TO THE QUEUE PUTS IT AT THE TOP !             */
                 /**     PROGRAMER DISCRETION IS ADVISED !                           */
-                /**     DON'T BLAME ME FOR YOUR LACK OF ATTENCION FOR THE COMMENTS! */
+                /**     DON'T BLAME ME FOR YOUR LACK OF ATTENTION FOR THE COMMENTS! */
                 /**     -NopeTheKid                                                 */
                 /****************************************************************** */
                 ///let temp= [];
