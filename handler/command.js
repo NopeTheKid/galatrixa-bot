@@ -16,7 +16,7 @@ module.exports = (client) => {
                 table.addRow(file, 'ok');
             }
             else {
-                table.addRow(file, 'ko');
+                table.addRow(file, '*ko*');
                 continue;
             }
 

@@ -73,8 +73,8 @@ module.exports = {
             }
         
             await fs.writeFile('img/palavraDia.png', images, 'buffer', function(err){
-            if (err) throw err
-            console.log('File saved.')
+                if (err) throw err
+                console.log('File saved.')
             });
         
 	        setTimeout(function(){}, 5000);
@@ -86,12 +86,16 @@ module.exports = {
             .setImage('attachment://palavraDia.png')
             .setTimestamp();
 
-            if(announce)
-                channel.send(embed)
-                    .then(message => message.crosspost());
-            else
-                channel.send(embed);
-       
+			try {
+				if(announce)
+					channel.send(embed)
+						.then(message => message.crosspost());
+				else
+					channel.send(embed);				
+			} catch (error) {
+				console.error("****************************************\nERROR : \n" + error + "****************************************")
+				this.sendPalavraDia(channel, announce)
+			}
         })();
 
     }
