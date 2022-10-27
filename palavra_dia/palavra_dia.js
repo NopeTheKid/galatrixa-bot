@@ -5,7 +5,7 @@ const nodeHtmlToImage = require('node-html-to-image');
 const fs = require('fs');
 let parser = new Parser();
 module.exports = {
-    sendPalavraDia: function (channel, announce){
+    sendPalavraDia: function (channel, client, announce){
         let palavraDia;
         (async () => {
 
@@ -89,7 +89,26 @@ module.exports = {
 			try {
 				if(announce)
 					channel.send(embed)
-						.then(message => message.crosspost());
+						.then((message) => {
+                            message.crosspost();
+                            let chnl = client.channels.cache.find(chnl => chnl.name === channel.name);	
+                            let pDiaPosted = false;
+                            chnl.messages.fetch({ limit: 1 }).then(messages => {
+                                //Iterate through the messages here with the variable "messages".
+                                messages.forEach(message => {
+                                    // Check if already posted
+                                    if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds.length > 0 && embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
+                                        if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
+                                            pDiaPosted = true;
+                                        }
+                                    }
+                                    // If not posted, post
+                                    if(pDiaPosted== false){
+                                        throw "Not Posted"
+                                    }
+                                });
+                            });
+                        });
 				else
 					channel.send(embed);				
 			} catch (error) {

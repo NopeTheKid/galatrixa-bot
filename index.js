@@ -45,7 +45,7 @@ client.once('ready', () => {
 	
 	let today = new Date();
 	cron.schedule(cronDate, () =>{
-		palavraDia.sendPalavraDia(channel, true);
+		palavraDia.sendPalavraDia(channel, client, true);
 	}, {
 		scheduled:true, 
 		timezone:"Atlantic/Madeira"
@@ -65,7 +65,7 @@ client.once('ready', () => {
 			}
 			// If not posted, post
 			if(pDiaPosted==false && today.getHours() > 8){
-				palavraDia.sendPalavraDia(channel, true);
+				palavraDia.sendPalavraDia(channel, client, true);
 			}
 		});
 	});
