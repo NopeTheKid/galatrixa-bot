@@ -140,5 +140,7 @@ module.exports = {
                     serverQueue.textChannel.send(`Playlist has been added to the queue!`);
             }
         }
-    }
+    }, embedHasImage(msgEmbed) {// Check if message embed has an image attached 
+       return msgEmbed.image != null;
+   }
 }

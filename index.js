@@ -3,6 +3,7 @@ const {Collection, GuildMember} = require('discord.js');
 const Client = require('./client/Client');
 const palavraDia = require('./palavra_dia/palavra_dia.js');
 var cron = require("node-cron");
+const { embedHasImage } = require("./util/functions.js");
 const {
 	prefix,
 	token,
@@ -92,7 +93,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 	}
 });
 
-client.on('message', async message => {
+client.on('message', async message => {//console.log(message);
 	if (message.author.bot) return;
 	if (!message.guild) return;
 	if (!message.content.startsWith(prefix)) return;
@@ -117,12 +118,3 @@ client.on('message', async message => {
 });
 
 client.login(token);
-
-/** FUNCTIONS */
-
-/** Check if message embed has an image attached 
- *  Returns true if has message
-*/
-function embedHasImage(msgEmbed) {
-    return msgEmbed.image != null;
-}

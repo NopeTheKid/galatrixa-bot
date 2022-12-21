@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js");
 let Parser = require('rss-parser');
 const nodeHtmlToImage = require('node-html-to-image');
 const fs = require('fs');
+const { embedHasImage } = require("../util/functions.js");
 let parser = new Parser();
 module.exports = {
     sendPalavraDia: function (channel, client, announce){
@@ -87,30 +88,31 @@ module.exports = {
             .setTimestamp();
 
 			try {
-				if(announce)
-					channel.send(embed)
-						.then((message) => {
-                            message.crosspost();
-                            let chnl = client.channels.cache.find(chnl => chnl.name === channel.name);	
-                            let pDiaPosted = false;
-                            chnl.messages.fetch({ limit: 1 }).then(messages => {
-                                //Iterate through the messages here with the variable "messages".
-                                messages.forEach(message => {
-                                    // Check if already posted
-                                    if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds.length > 0 && embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
-                                        if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
-                                            pDiaPosted = true;
-                                        }
-                                    }
-                                    // If not posted, post
-                                    if(pDiaPosted== false){
-                                        throw "Not Posted"
-                                    }
-                                });
-                            });
+                if(announce){
+                    await channel.send(embed)
+                        .then((message) => {
+                                message.crosspost();
                         });
-				else
-					channel.send(embed);				
+                    let chnl = client.channels.cache.find(chnl => chnl.name === channel.name);	
+                    let pDiaPosted = false;
+                    let today = new Date();
+                    chnl.messages.fetch({ limit: 1 }).then(messages => {
+                        //Iterate through the messages here with the variable "messages".
+                        messages.forEach(message => {
+                            // Check if already posted
+                            if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds.length > 0 && embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
+                                if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
+                                    pDiaPosted = true;
+                                }
+                            }
+                            // If not posted, post
+                            if(pDiaPosted== false){
+                                throw "Not Posted"
+                            }
+                        });
+                    });
+                }else
+                    channel.send(embed);				
 			} catch (error) {
 				console.error("****************************************\nERROR : \n" + error + "****************************************")
 				this.sendPalavraDia(channel, announce)
