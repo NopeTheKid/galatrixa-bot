@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {Collection, GuildMember} = require('discord.js');
+const {Collection, GatewayIntentBits} = require('discord.js');
 const Client = require('./client/Client');
 const palavraDia = require('./palavra_dia/palavra_dia.js');
 var cron = require("node-cron");
@@ -8,9 +8,12 @@ const {
 	prefix,
 	token,
 } = require('./config.json');
-const { channel } = require('diagnostics_channel');
+
+const intents = new IntentsBitField();
+intents.add(GatewayIntentBits);
 
 const client = new Client({
+	intents: intents,
 	disableEveryone: false
 });
 

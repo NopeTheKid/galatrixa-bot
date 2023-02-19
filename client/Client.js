@@ -1,4 +1,4 @@
-const {Client, Collection} = require('discord.js');
+const {Client, Collection, GatewayIntentBits} = require('discord.js');
 const Discord = require('discord.js');
 
 module.exports = class extends Client {
@@ -12,7 +12,7 @@ module.exports = class extends Client {
 
 		this.queue = new Map();
 
-		this.intents = new Discord.Intents(Discord.Intents.ALL);
+		this.intents = GatewayIntentBits;
 
 		this.config = config;
 	}
