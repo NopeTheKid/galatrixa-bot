@@ -1,9 +1,13 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const ytdl = require("ytdl-core");
 const { prefix } = require("./../../config.json");
 const { play, addQueue } = require("../../util/functions.js");
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
+	data: new SlashCommandBuilder()
+		.setName("bemfeito")
+		.setDescription("É bem feito!"),
 	name: "bemfeito",
 	category: "fun",
 	description: "É bem feito!",
@@ -11,9 +15,9 @@ module.exports = {
 	async run(client, message, args) {
 		//creates embed
 		let title = `É bem feito!`;
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setColor("#ffffff")
-			.setFooter(message.guild.me.displayName, client.user.displayAvatarURL)
+			//.setFooter(client.user.username, client.user.displayAvatarURL)
 			.setTitle(title)
 			.setTimestamp()
 			.setImage("https://media1.tenor.com/images/aee72fd7530ce5deae7209ffe6df76c0/tenor.gif?itemid=5240463");

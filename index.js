@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {Collection, GatewayIntentBits} = require('discord.js');
+const {Collection, GatewayIntentBits, Events } = require('discord.js');
 const Client = require('./client/Client');
 const palavraDia = require('./palavra_dia/palavra_dia.js');
 var cron = require("node-cron");
@@ -9,13 +9,15 @@ const {
 	token,
 } = require('./config.json');
 
-const intents = new IntentsBitField();
-intents.add(GatewayIntentBits);
-
 const client = new Client({
-	intents: intents,
-	disableEveryone: false
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+	],
 });
+
 
 client.aliases = new Collection();
 client.categories = fs.readdirSync("./commands/");
@@ -29,7 +31,6 @@ const active = new Map();
 });
 
 client.once('ready', () => {
-	console.log('Ready!');
 	
 	client.user.setPresence({
 		status: "online",
@@ -41,6 +42,7 @@ client.once('ready', () => {
 	/*
 	 *	PALAVRA DO DIA
 	 */
+    /*
 	let channel = client.channels.cache.find(channel => channel.name === "palavra-do-dia");	
 	//let channel = client.channels.cache.find(channel => channel.name === "bot-test"); // DEBUG
 		
@@ -76,6 +78,8 @@ client.once('ready', () => {
 	/*
 	 *	/PALAVRA DO DIA
 	 */
+    
+	console.log('Ready!');
 });
 
 client.on('reconnecting', () => {
@@ -96,7 +100,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 	}
 });
 
-client.on('message', async message => {//console.log(message);
+client.on('messageCreate', async message => {//console.log(message);
 	if (message.author.bot) return;
 	if (!message.guild) return;
 	if (!message.content.startsWith(prefix)) return;
@@ -119,5 +123,24 @@ client.on('message', async message => {//console.log(message);
 	};
 	if (command) command.run(client, message, args, ops);
 });
+
+client.on(Events.InteractionCreate, async interaction => {
+	if (!interaction.isChatInputCommand()) return;
+
+	const command = interaction.client.commands.get(interaction.commandName);
+
+	if (!command) {
+		console.error(`No command matching ${interaction.commandName} was found.`);
+		return;
+	}
+
+	try {
+		await command.run(client, interaction, 1);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+});
+
 
 client.login(token);

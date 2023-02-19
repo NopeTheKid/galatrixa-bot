@@ -76,7 +76,7 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
         serverQueue.textChannel.send(`Start playing: **${song.title}**`);
     }, async addQueue(song, serverQueue, message, fun = false) { //add music to the queue
-        if (!serverQueue) {
+        if (!serverQueue) {console.log(message);
             const voiceChannel = message.member.voice.channel;
             const queue = message.client.queue;
             const queueContruct = {
