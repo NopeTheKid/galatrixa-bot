@@ -1,19 +1,19 @@
 module.exports = {
-	name: 'pause',
-    category: "music",
-	description: 'Pause the music',
-	run(client, message, args, ops) {
-		let queue = client.queue.get(message.guild.id);
+    name: 'pause',
+    description: 'pause the track',
+    voiceChannel: true,
 
-    if ( queue && queue.playing ) {
-        queue.playing = false;
-        queue.connection.dispatcher.pause();
-        return message.channel.send('🎵 Music has now been paused');
-    }
+    execute({ inter }) {
+        const queue = player.getQueue(inter.guildId);
+
+        if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
         
-    if(queue && !queue.playing)
-        return message.channel.send('🎵 Music already paused!');
+        if(queue.connection.paused) return inter.reply({content: 'The track is currently paused!', ephemeral: true})
 
-    return [message.delete(), message.channel.send('⚠ No musics are being played!')];
-	},
+        if(queue.connection.paused) return inter.reply({content: `The track is currently paused, ${inter.member}... try again ? ❌`, ephemeral: true})
+
+        const success = queue.setPaused(true);
+        
+        return inter.reply({ content: success ? `Current music ${queue.current.title} paused ✅` : `Something went wrong ${inter.member}... try again ? ❌` });
+    },
 };

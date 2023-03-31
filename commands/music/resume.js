@@ -1,19 +1,18 @@
 module.exports = {
-	name: 'resume',
-    category: "music",
-	description: 'Resume the music',
-	run(client, message, args, ops) {
-		let queue = client.queue.get(message.guild.id);
+    name: 'resume',
+    description: 'play the track',
+    voiceChannel: true,
 
-        if ( queue && !queue.playing ) {
-            queue.playing = true;
-            queue.connection.dispatcher.resume();
-            return message.channel.send('🎵 Music has now been resumed!');
-        }
+    execute({ inter }) {
+        const queue = player.getQueue(inter.guildId);
 
-        if(queue && queue.playing && queue.songs != [])
-            return message.channel.send('🎵 Music already playing!');
+        if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+        
 
-        return [message.delete(), message.channel.send('⚠ No musics are being played!')];
-	},
+        if(!queue.connection.paused) return inter.reply({content: `The track is already running, ${inter.member}... try again ? ❌`, ephemeral: true})
+
+        const success = queue.setPaused(false);
+        
+        return inter.reply({ content:success ? `Current music ${queue.current.title} resumed ✅` : `Something went wrong ${inter.member}... try again ? ❌`});
+    },
 };

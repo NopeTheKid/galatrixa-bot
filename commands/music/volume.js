@@ -1,24 +1,31 @@
+const maxVol = client.config.opt.maxVol;
+const { ApplicationCommandOptionType } = require('discord.js');
+
 module.exports = {
-	name: 'volume',
-    category: "music",
-	description: 'Change the volume',
-	run(client, message, args, ops) {
-		let queue = client.queue.get(message.guild.id);
-        if ( !queue )
-         return [message.delete(), message.channel.send('⚠ No musics are being played.')];
+    name: 'volume',
+    description: 'adjust',
+    voiceChannel: true,
+    options: [
+        {
+            name: 'volume',
+            description: 'the amount volume',
+            type: ApplicationCommandOptionType.Number,
+            required: true,
+            minValue: 1,
+            maxValue: maxVol
+        }
+    ],
 
-        if ( !args[0] ) 
-            return [message.delete(), message.channel.send(`🎵 Current Volume: **${queue.volume}/100**`)];
+    execute({ inter }) {
+        const queue = player.getQueue(inter.guildId);
 
-        if ( isNaN(args[0]) ) 
-            return [message.delete(), message.channel.send(`${message.author}, please input a volume between 0 and 100!`)];
+        if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+        const vol = inter.options.getNumber('volume')
 
-        if ( args[0] < 0 || args[0] > 100 ) 
-            return [message.delete(), message.channel.send(`${message.author}, please input a volume between 0 and 100!`)];
+        if (queue.volume === vol) return inter.reply({ content: `The volume you want to change is already the current one ${inter.member}... try again ? ❌`, ephemeral: true });
 
-        queue.volume = args[0];
-        queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
+        const success = queue.setVolume(vol);
 
-        return message.channel.send(`🎵 Volume has now been set to **${queue.volume}/100**`);
-	},
+        return inter.reply({ content:success ? `The volume has been modified to **${vol}**/**${maxVol}**% 🔊` : `Something went wrong ${inter.member}... try again ? ❌`});
+    },
 };

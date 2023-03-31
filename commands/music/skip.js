@@ -1,21 +1,15 @@
 module.exports = {
-	name: 'skip',
-    category: "music",
-	description: 'Skip a song!',
-	run(client, message, args, ops) {
-		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');
-		if (!serverQueue) return message.channel.send('There is no song that I could skip!');
+    name: 'skip',
+    description: 'stop the track',
+    voiceChannel: true,
 
-		if(serverQueue.loopQ){
-		  serverQueue.songs.push(serverQueue.songs[0]);
-		  serverQueue.songs.pop(0);
-		}
-        if(serverQueue.loopM){		
-		  serverQueue.songs.unshift(serverQueue.songs[0]);
-		  serverQueue.songs.shift();
-		}
-		  
-		serverQueue.connection.dispatcher.end();
-	},
+    execute({ inter }) {
+        const queue = player.getQueue(inter.guildId);
+
+         if (!queue || !queue.playing) return inter.reply({ content:`No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+
+        const success = queue.skip();
+
+        return inter.reply({ content: success ? `Current music ${queue.current.title} skipped ✅` : `Something went wrong ${inter.member}... try again ? ❌`});
+    },
 };

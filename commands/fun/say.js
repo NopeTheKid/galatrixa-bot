@@ -1,12 +1,18 @@
-const { prefix } = require("../../config.json");
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
 	name: 'say',
-    category: "fun",
     description: 'Say something',
-    usage:`${prefix}say`,
-	run(client, message, args, ops) {
-        args= args.join(' ');
-        return message.channel.send(args);
+	options:[
+		{
+            name: 'string',
+            description: 'what you want me to say',
+            type: ApplicationCommandOptionType.String,
+            required: true,
+        }
+	],
+	async execute({inter}) {
+        args= inter.options.getString('string');
+        return inter.reply({ content: args});
 	},
 };

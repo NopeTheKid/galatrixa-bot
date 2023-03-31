@@ -1,50 +1,19 @@
 {
-  "name": "galatrixabot",
-  "version": "1.0.0",
-  "description": "Discord BOT for Galatrixa Inc.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "engines": {
-    "node": "v16.18.0",
-    "npm": "8.19.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NopeTheKid/galatrixa-bot.git"
-  },
-  "author": "Rúben Teixeira & Agostinho Carvalho",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NopeTheKid/galatrixa-bot/issues"
-  },
-  "homepage": "https://github.com/NopeTheKid/galatrixa-bot#readme",
-  "dependencies": {
-    "@discordjs/opus": "^0.8.0",
-    "ascii-table": "^0.0.9",
-    "axios": "^0.21.2",
-    "common-tags": "^1.8.2",
-    "cron": "^1.8.2",
-    "diagnostics_channel": "^1.1.0",
-    "discord.js": "^12.5.3",
-    "dotenv": "^8.1.0",
-    "ffmpeg": "0.0.4",
-    "ffmpeg-static": "^4.1.0",
-    "fluent-ffmpeg": "^2.1.2",
-    "g": "^2.0.1",
-    "n": "^6.7.0",
-    "node-cron": "^3.0.1",
-    "node-html-to-image": "^3.2.4",
-    "opusscript": "0.0.7",
-    "patch-package": "^6.4.7",
-    "rss-parser": "^3.12.0",
-    "simple-youtube": "^0.1.1",
-    "simple-youtube-api": "^5.2.1",
-    "uuid": "^8.3.2",
-    "ws": "^8.4.0",
-    "xmldom": "0.8.6",
-    "yt-search": "^2.10.3",
-    "ytdl-core": "^4.9.2"
-  }
+    "name": "music-bot",
+    "main": "main.js",
+    "author": "ZerioDev",
+    "version": "6.0.0",
+    "repository": "https://github.com/ZerioDev/Music-bot.git",
+    "description": "A complete code to download for a cool Discord music bot.",
+    "scripts": {
+        "start": "node main.js"
+    },
+    "dependencies": {
+        "common-tags": "^1.8.2",
+        "discord-player": "^5.3.1",
+        "discord.js": "^14.1.2",
+        "ffmpeg-static": "^5.0.2",
+        "ms": "^3.0.0-canary.1",
+        "opusscript": "^0.0.8"
+    }
 }
