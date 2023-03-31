@@ -5,7 +5,8 @@ node_modules/
 config.json
 
 # ignore img folder
-img/# Ignore the node_modules directory
+img/
+# Ignore the node_modules directory
 node_modules/
 
 # Ignore config file
