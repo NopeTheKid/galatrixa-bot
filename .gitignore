@@ -10,6 +10,7 @@ node_modules/
 
 # Ignore config file
 config.json
+remove_commands.js
 
 # ignore img folder
 img/
