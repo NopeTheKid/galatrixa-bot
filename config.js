@@ -1,6 +1,6 @@
 module.exports = {
     app: {
-        token: 'MTA0MjQ0ODk2NTExNjg5MTIxNg.GnEWoP.5gFFr1uuJ24Golel_blMXTFoCcx6pVKXxS2c9g',
+        token: 'MTA0MjQ0ODk2NTExNjg5MTIxNg.GyFPHr.6fEmUsbphQoSYaZH6zl0tw74YvITkKAT8nMljk',
         playing: 'Vai tu',
         global: false,
         guild: '492389092428873739'

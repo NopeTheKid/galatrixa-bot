@@ -14,3 +14,4 @@ remove_commands.js
 
 # ignore img folder
 img/
+config.js
