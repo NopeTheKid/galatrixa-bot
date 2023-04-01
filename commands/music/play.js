@@ -1,4 +1,4 @@
-const { QueryType } = require('discord-player');
+const { QueryType, useMasterPlayer } = require('discord-player');
 const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
     name: 'play',
@@ -14,7 +14,8 @@ module.exports = {
     ],
 
     async execute({ inter }) {
-	await inter.deferReply();
+		await inter.deferReply();
+		const player = useMasterPlayer();
         const song = inter.options.getString('song');
         const res = await player.search(song, {
             requestedBy: inter.member,
@@ -23,8 +24,13 @@ module.exports = {
 
         if (!res || !res.tracks.length) return inter.editReply({ content: `No results found ${inter.member}... try again ? ❌`, ephemeral: true });
 
-        const queue = await player.createQueue(inter.guild, {
-            metadata: inter.channel,
+        const queue = await player.nodes.create(inter.guild, {
+            metadata: {
+				channel: inter.channel,
+				client: inter.guild.members.me,
+				requestedBy: inter.user,
+				inter: inter
+			},
             spotifyBridge: client.config.opt.spotifyBridge,
             initialVolume: client.config.opt.defaultvolume,
             leaveOnEnd: client.config.opt.leaveOnEnd
@@ -37,10 +43,10 @@ module.exports = {
             return inter.editReply({ content: `I can't join the voice channel ${inter.member}... try again ? ❌`, ephemeral: true});
         }
 
-       await inter.editReply({ content:`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`});
+        await inter.editReply({ content:`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`});
 
         res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
-
-        if (!queue.playing) await queue.play();
+		
+        if (!queue.node.isPlaying()) await queue.node.play();
     },
 };

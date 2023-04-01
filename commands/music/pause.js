@@ -12,8 +12,8 @@ module.exports = {
 
         if(queue.connection.paused) return inter.reply({content: `The track is currently paused, ${inter.member}... try again ? ❌`, ephemeral: true})
 
-        const success = queue.setPaused(true);
+        const success = queue.node.pause();
         
-        return inter.reply({ content: success ? `Current music ${queue.current.title} paused ✅` : `Something went wrong ${inter.member}... try again ? ❌` });
+        return inter.reply({ content: success ? `Current music ${queue.currentTrack.title} paused ✅` : `Something went wrong ${inter.member}... try again ? ❌` });
     },
 };

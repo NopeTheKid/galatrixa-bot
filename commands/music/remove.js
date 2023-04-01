@@ -25,14 +25,14 @@ module.exports = {
 
         const queue = player.getQueue(inter.guildId);
 
-        if (!queue || !queue.playing) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+        if (!queue || !queue.node.isPlaying()) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
         if (!track && !number) inter.reply({ content: `You have to use one of the options to remove a song ${inter.member}... try again ? ❌`, ephemeral: true });
 
         if (track) {
 
         for (let song of queue.tracks) {
             if (song.title === track || song.url === track ) {
-                queue.remove(song)
+                queue.node.remove(song)
                 return inter.reply({ content: `removed ${track} from the queue ✅` });
             }
 
@@ -48,7 +48,7 @@ module.exports = {
 
             if (!trackname) return inter.reply({ content: `This track dose not seem to exist ${inter.member}...  try again ?❌`, ephemeral: true });   
 
-            queue.remove(index);
+            queue.node.remove(index);
             
             return inter.reply({ content: `removed ${trackname} from the queue ✅` });
         }

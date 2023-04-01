@@ -18,7 +18,7 @@ module.exports = {
     async execute({ inter, client }) {
         const queue = player.getQueue(inter.guildId);
 
-        if (!queue || !queue.playing) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+        if (!queue || !queue.node.isPlaying()) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
 
         const actualFilter = queue.getFiltersEnabled()[0];
 
@@ -36,9 +36,9 @@ module.exports = {
 
         const filtersUpdated = {};
 
-        filtersUpdated[filter] = queue.getFiltersEnabled().includes(filter) ? false : true;
+        //filtersUpdated[filter] = queue.getFiltersEnabled().includes(filter) ? false : true;
 
-        await queue.setFilters(filtersUpdated);
+        await queue.filters.ffmpeg.toggle(filter);
 
         inter.reply({ content: `The filter ${filter} is now **${queue.getFiltersEnabled().includes(filter) ? 'enabled' : 'disabled'}** ✅\n*Reminder the longer the music is, the longer this will take.*` });
     },

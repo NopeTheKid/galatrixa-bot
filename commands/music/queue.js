@@ -14,7 +14,7 @@ module.exports = {
 
         const methods = ['', '🔁', '🔂'];
 
-        const songs = queue.tracks.length;
+        const songs = queue.tracks.size;
 
         const nextSongs = songs > 5 ? `And **${songs - 5}** other song(s)...` : `In the playlist **${songs}** song(s)...`;
 
@@ -24,7 +24,7 @@ module.exports = {
         .setColor('#ff0000')
         .setThumbnail(inter.guild.iconURL({ size: 2048, dynamic: true }))
         .setAuthor({name: `Server queue - ${inter.guild.name} ${methods[queue.repeatMode]}`, iconURL: client.user.displayAvatarURL({ size: 1024, dynamic: true })})
-        .setDescription(`Current ${queue.current.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`)
+        .setDescription(`Current ${queue.currentTrack.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`)
         .setTimestamp()
         .setFooter({ text: 'Music comes first - Made with heart by Zerio ❤️', iconURL: inter.member.avatarURL({ dynamic: true })})
 

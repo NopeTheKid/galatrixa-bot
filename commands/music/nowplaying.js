@@ -10,7 +10,7 @@ module.exports = {
 
         if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
 
-        const track = queue.current;
+        const track = queue.currentTrack;
 
         const methods = ['disabled', 'track', 'queue'];
 
@@ -18,7 +18,7 @@ module.exports = {
 
         const trackDuration = timestamp.progress == 'Infinity' ? 'infinity (live)' : track.duration;
 
-        const progress = queue.createProgressBar();
+        const progress = queue.node.createProgressBar();
         
 
         const embed = new EmbedBuilder()

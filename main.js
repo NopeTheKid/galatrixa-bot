@@ -20,6 +20,7 @@ global.player = new Player(client, client.config.opt.discordPlayer);
 
 require('./src/loader');
 require('./src/events');
+client.on('debug', debug => {console.log(debug)})
 
 client.on('ready', client => {
 	/*

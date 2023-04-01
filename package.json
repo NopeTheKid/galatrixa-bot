@@ -1,23 +1,29 @@
 {
-    "name": "music-bot",
+    "name": "galatrixa-bot",
     "main": "main.js",
-    "author": "ZerioDev",
-    "version": "6.0.0",
-    "repository": "https://github.com/ZerioDev/Music-bot.git",
-    "description": "A complete code to download for a cool Discord music bot.",
+    "author": "Nopearino",
+    "version": "2.0.0",
+    "repository": "https://github.com/NopeTheKid/galatrixa-bot.githttps://github.com/NopeTheKid/galatrixa-bot.git",
+    "description": "Vvai tu",
     "scripts": {
         "start": "node main.js"
     },
     "dependencies": {
+        "@discord-player/extractor": "^4.1.2",
+        "@discordjs/opus": "^0.9.0",
+        "@discordjs/voice": "^0.15.0",
+        "@distube/ytdl-core": "^4.11.7",
         "common-tags": "^1.8.2",
-        "discord-player": "^5.3.1",
+        "discord-player": "^6.0.0",
         "discord.js": "^14.1.2",
-        "ffmpeg-static": "^5.0.2",
+        "ffmpeg-static": "^5.1.0",
         "ms": "^3.0.0-canary.1",
         "node-cron": "^3.0.2",
         "node-html-to-image": "^3.3.0",
         "opusscript": "^0.0.8",
+        "play-dl": "^1.9.6",
         "rss-parser": "^3.12.0",
-        "xmldom": "^0.6.0"
+        "xmldom": "^0.6.0",
+        "ytdl-core": "^4.11.3"
     }
 }

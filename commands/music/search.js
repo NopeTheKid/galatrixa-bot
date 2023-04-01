@@ -24,8 +24,12 @@ module.exports = {
 
         if (!res || !res.tracks.length) return inter.reply({ content: `No results found ${inter.member}... try again ? ❌`, ephemeral: true });
 
-        const queue = await player.createQueue(inter.guild, {
-            metadata: inter.channel,
+        const queue = await player.nodes.create(inter.guild, {
+            metadata: {
+				channel:inter.channel,
+				client: inter.guild.members.me,
+				requestedBy: inter.user
+			},
             leaveOnEnd: client.config.opt.leaveOnEnd,
         });
         const maxTracks = res.tracks.slice(0, 10);
@@ -65,7 +69,7 @@ module.exports = {
 
             queue.addTrack(res.tracks[query.content - 1]);
 
-            if (!queue.playing) await queue.play();
+            if (!queue.node.isPlaying()) await queue.node.play();
         });
 
         collector.on('end', (msg, reason) => {

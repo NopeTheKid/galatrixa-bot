@@ -25,13 +25,13 @@ module.exports = {
 
         const queue = player.getQueue(inter.guildId);
 
-        if (!queue || !queue.playing) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+        if (!queue || !queue.node.isPlaying()) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
         if (!track && !number) inter.reply({ content: `You have to use one of the options to jump to a song ${inter.member}... try again ? ❌`, ephemeral: true });
 
             if (track) {
         for (let song of queue.tracks) {
             if (song.title === track || song.url === track ) {
-                queue.skipTo(song)
+                queue.node.skipTo(song)
                 return inter.reply({ content: `skiped to ${track} ✅` });
             }
         }
@@ -41,7 +41,7 @@ module.exports = {
         const index = number - 1
         const trackname = queue.tracks[index].title
         if (!trackname) return inter.reply({ content: `This track dose not seem to exist ${inter.member}...  try again ?❌`, ephemeral: true });   
-        queue.skipTo(index);
+        queue.node.skipTo(index);
         return inter.reply({ content: `Jumped to ${trackname}  ✅` });
     }
          
