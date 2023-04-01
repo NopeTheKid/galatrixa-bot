@@ -6,11 +6,9 @@ module.exports = {
     voiceChannel: true,
 
     execute({ client, inter }) {
-        const queue = player.getQueue(inter.guildId);
-
-        if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
-
-        if (!queue.tracks[0]) return  inter.reply({ content: `No music in the queue after the current one ${inter.member}... try again ? ❌`, ephemeral: true });
+        const queue = player.nodes.get(inter.guildId);
+		
+		if (!queue) return inter.reply({ content: `No music in the queue after the current one ${inter.member}... try again ? ❌`, ephemeral: true });
 
         const methods = ['', '🔁', '🔂'];
 
@@ -26,7 +24,7 @@ module.exports = {
         .setAuthor({name: `Server queue - ${inter.guild.name} ${methods[queue.repeatMode]}`, iconURL: client.user.displayAvatarURL({ size: 1024, dynamic: true })})
         .setDescription(`Current ${queue.currentTrack.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`)
         .setTimestamp()
-        .setFooter({ text: 'Music comes first - Made with heart by Zerio ❤️', iconURL: inter.member.avatarURL({ dynamic: true })})
+        .setFooter({ text: 'Vai tu', iconURL: inter.member.avatarURL({ dynamic: true })})
 
         inter.reply({ embeds: [embed] });
     },

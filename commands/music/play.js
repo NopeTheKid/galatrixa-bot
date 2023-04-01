@@ -26,16 +26,18 @@ module.exports = {
 
         const queue = await player.nodes.create(inter.guild, {
             metadata: {
-				channel: inter.channel,
-				client: inter.guild.members.me,
-				requestedBy: inter.user,
-				inter: inter
 			},
             spotifyBridge: client.config.opt.spotifyBridge,
             initialVolume: client.config.opt.defaultvolume,
             leaveOnEnd: client.config.opt.leaveOnEnd
         });
-
+		metadata = {
+			channel: inter.channel,
+			client: inter.guild.members.me,
+			requestedBy: inter.user,
+			inter: inter
+		}
+		queue.setMetadata(metadata)
         try {
             if (!queue.connection) await queue.connect(inter.member.voice.channel);
         } catch {
@@ -45,8 +47,7 @@ module.exports = {
 
         await inter.editReply({ content:`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`});
 
-        res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
-		
+        res.playlist ? queue.addTrack(res.tracks) : queue.addTrack(res.tracks[0]);
         if (!queue.node.isPlaying()) await queue.node.play();
     },
 };

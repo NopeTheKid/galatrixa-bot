@@ -8,19 +8,13 @@ player.events.on('playerError', (queue, error) => {
     console.log(`Error emitted from the connection ${error.message}`);
 });
 
-player.events.on('playerStart', (queue, track) => {
+player.events.on('playerStart', async (queue, track) => {
     if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return;
 	iconURL = "https://cdn.discordapp.com/avatars/"+track.requestedBy.id+"/"+track.requestedBy.avatar+".png";
 	
-
     const embed = new EmbedBuilder()
     .setAuthor({name: `Started playing ${track.title} 🎧`, iconURL: iconURL})
     .setColor('#13f857')
-
-    const back = new ButtonBuilder()
-    .setLabel('Back')
-    .setCustomId(JSON.stringify({ffb: 'back'}))
-    .setStyle('Primary')
 
     const skip = new ButtonBuilder()
     .setLabel('Skip')
@@ -42,27 +36,27 @@ player.events.on('playerStart', (queue, track) => {
     .setCustomId(JSON.stringify({ffb: 'queue'}))
     .setStyle('Secondary')
 
-    const row1 = new ActionRowBuilder().addComponents(back, loop, resumepause, queuebutton, skip)
-	//console.log(queue.metadata)
-    queue.metadata.inter.editReply({embeds: [embed], components: [row1] })
+    const row1 = new ActionRowBuilder().addComponents(loop, resumepause, queuebutton, skip)
+	
+    await queue.metadata.inter.editReply({content:"",embeds: [embed], components: [row1] })
 });
 
-player.events.on('audioTrackAdd', (queue, track) => {
-	queue.metadata.inter.editReply({content: `Track ${track.title} added in the queue ✅`, embeds:[], components:[]});
+player.events.on('audioTrackAdd', async (queue, track) => {
+	await queue.metadata.inter.editReply({content: `Track ${track.title} added in the queue ✅`, embeds:[], components:[]});
 });
 
-player.events.on('disconnect', (queue) => {
-    queue.metadata.inter.editReply({content: 'I was disconnected from the voice channel, clearing queue... ❌', embeds:[], components:[]});
+player.events.on('disconnect', async (queue) => {
+    await queue.metadata.inter.editReply({content: 'I was disconnected from the voice channel, clearing queue... ❌', embeds:[], components:[]});
 });
 
-player.events.on('emptyChannel', (queue) => {
-    queue.metadata.inter.editReply({content: 'Nobody is in the voice channel, leaving the voice channel... ❌', embeds:[], components:[]});
+player.events.on('emptyChannel', async (queue) => {
+    await queue.metadata.inter.editReply({content: 'Nobody is in the voice channel, leaving the voice channel... ❌', embeds:[], components:[]});
 });
 
-player.events.on('emptyQueue', (queue) => {
-    queue.metadata.inter.editReply({content: 'I finished reading the whole queue ✅', embeds:[], components:[]});
+player.events.on('emptyQueue', async (queue) => {
+    await queue.metadata.inter.editReply({content: 'I finished reading the whole queue ✅', embeds:[], components:[]});
 });
 
-player.events.on('audioTracksAdd', (queue, tracks) => {
-    queue.metadata.inter.editReply({content: `All the songs in playlist added into the queue ✅`, embeds:[], components:[]});
+player.events.on('audioTracksAdd', async (queue, tracks) => {
+    await queue.metadata.inter.editReply({content: `All the songs in playlist added into the queue ✅`, embeds:[], components:[]});
 });

@@ -22,15 +22,10 @@ module.exports = {
        .setTitle('control your music from the buttons below')
        .setImage(inter.guild.iconURL({ size: 4096, dynamic: true }))
        .setColor('#36393e')
-       .setFooter({ text: 'Music comes first - Made with heart by Zerio ❤️', iconURL: inter.member.avatarURL({ dynamic: true })})
+       .setFooter({ text: 'vai tu', iconURL: inter.member.avatarURL({ dynamic: true })})
 
 
          inter.reply({ content: `sending controller to ${Channel}... ✅`, ephemeral: true})
-
-         const back = new ButtonBuilder()
-         .setLabel('Back')
-         .setCustomId(JSON.stringify({ffb: 'back'}))
-         .setStyle('Primary')
 
          const skip = new ButtonBuilder()
          .setLabel('Skip')
@@ -73,10 +68,8 @@ module.exports = {
          .setStyle('Secondary')
 
 
-         const row1 = new ActionRowBuilder().addComponents(back, queuebutton, resumepause, np, skip)
+         const row1 = new ActionRowBuilder().addComponents(queuebutton, resumepause, np, skip)
          const row2 = new ActionRowBuilder().addComponents(volumedown, loop, save, volumeup)
-
-
 
         Channel.send({ embeds: [embed], components: [row1, row2] })
 

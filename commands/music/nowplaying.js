@@ -6,7 +6,7 @@ module.exports = {
     voiceChannel: true,
 
     execute({ inter }) {
-        const queue = player.getQueue(inter.guildId);
+        const queue = player.nodes.get(inter.guildId);
 
         if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
 
@@ -14,7 +14,7 @@ module.exports = {
 
         const methods = ['disabled', 'track', 'queue'];
 
-        const timestamp = queue.getPlayerTimestamp();
+        const timestamp = queue.node.getTimestamp();
 
         const trackDuration = timestamp.progress == 'Infinity' ? 'infinity (live)' : track.duration;
 
@@ -25,7 +25,7 @@ module.exports = {
         .setAuthor({ name: track.title,  iconURL: client.user.displayAvatarURL({ size: 1024, dynamic: true })})
         .setThumbnail(track.thumbnail)
         .setDescription(`Volume **${queue.volume}**%\nDuration **${trackDuration}**\nProgress ${progress}\nLoop mode **${methods[queue.repeatMode]}**\nRequested by ${track.requestedBy}`)
-        .setFooter({ text: 'Music comes first - Made with heart by Zerio ❤️', iconURL: inter.member.avatarURL({ dynamic: true })})
+        .setFooter({ text: 'Vai tu', iconURL: inter.member.avatarURL({ dynamic: true })})
         .setColor('ff0000')
         .setTimestamp()
 
