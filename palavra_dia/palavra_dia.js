@@ -1,4 +1,4 @@
-const { DOMParser } = require('xmldom');
+const { DOMParser } = require('@xmldom/xmldom');
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 let Parser = require('rss-parser');
 const nodeHtmlToImage = require('node-html-to-image');
