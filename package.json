@@ -13,8 +13,9 @@
         "@discordjs/opus": "^0.9.0",
         "@discordjs/voice": "^0.15.0",
         "@distube/ytdl-core": "^4.11.7",
+        "@xmldom/xmldom": "^0.8.0",
         "common-tags": "^1.8.2",
-        "discord-player": "^6.0.0",
+        "discord-player": "^6.2.1",
         "discord.js": "^14.1.2",
         "ms": "^3.0.0-canary.1",
         "node-cron": "^3.0.2",
@@ -22,7 +23,6 @@
         "opusscript": "^0.0.8",
         "play-dl": "^1.9.6",
         "rss-parser": "^3.13.0",
-        "@xmldom/xmldom": "^0.8.0",
         "ytdl-core": "^4.11.3"
     }
 }
