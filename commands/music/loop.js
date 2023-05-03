@@ -25,22 +25,38 @@ module.exports = {
         switch (inter.options._hoistedOptions.map(x => x.value).toString()) {
             case 'enable_loop_queue': {
                 if (queue.repeatMode === 1) return inter.reply({ content:`You must first disable the current music in the loop mode (/loop Disable) ${inter.member}... try again ? ❌`, ephemeral: true });
-
-                const success = queue.setRepeatMode( QueueRepeatMode.QUEUE);
+                let success = false;
+                try{
+                    queue.setRepeatMode( QueueRepeatMode.QUEUE);
+                    success = true;
+                }catch(e){
+                    console.log(e)
+                }
 
                 return inter.reply({ content:success ? `Repeat mode **enabled** the whole queue will be repeated endlessly 🔁` : `Something went wrong ${inter.member}... try again ? ❌` });
                 break
             }
             case 'disable_loop': {
-                const success = queue.setRepeatMode(QueueRepeatMode.OFF);
+                let success = false;
+                try{
+                    queue.setRepeatMode(QueueRepeatMode.OFF);
+                    success = true;
+                }catch(e){
+                    console.log(e)
+                }
 
                 return inter.reply({ content:success ? `Repeat mode **disabled**` : `Something went wrong ${inter.member}... try again ? ❌` });
                 break
             }
             case 'enable_loop_song': {
                 if (queue.repeatMode === 2) return inter.reply({ content:`You must first disable the current music in the loop mode (/loop Disable) ${inter.member}... try again ? ❌`, ephemeral: true });
-
-                const success = queue.setRepeatMode( QueueRepeatMode.TRACK);
+                let success = false;
+                try{
+                    queue.setRepeatMode( QueueRepeatMode.TRACK);
+                    success = true;
+                }catch(e){
+                    console.log(e)
+                }
                 
                 return inter.reply({ content:success ? `Repeat mode **enabled** the current song will be repeated endlessly (you can end the loop with /loop disable)` : `Something went wrong ${inter.member}... try again ? ❌` });
                 break
