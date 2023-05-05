@@ -22,9 +22,15 @@ module.exports = {
         if (!queue) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
         const vol = inter.options.getNumber('volume')
 
-        if (queue.volume === vol) return inter.reply({ content: `The volume you want to change is already the current one ${inter.member}... try again ? ❌`, ephemeral: true });
+        if (queue.node.volume === vol) return inter.reply({ content: `The volume you want to change is already the current one ${inter.member}... try again ? ❌`, ephemeral: true });
 
-        const success = queue.setVolume(vol);
+        let success = false;
+        try{
+            queue.node.setVolume(vol);
+            success = true;
+        }catch(e){
+            console.log(e)
+        }
 
         return inter.reply({ content:success ? `The volume has been modified to **${vol}**/**${maxVol}**% 🔊` : `Something went wrong ${inter.member}... try again ? ❌`});
     },

@@ -2,7 +2,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
     name: 'nowplaying',
-    description: 'veiw what is playing!',
+    description: 'view what is playing!',
     voiceChannel: true,
 
     execute({ inter }) {
@@ -24,7 +24,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setAuthor({ name: track.title,  iconURL: client.user.displayAvatarURL({ size: 1024, dynamic: true })})
         .setThumbnail(track.thumbnail)
-        .setDescription(`Volume **${queue.volume}**%\nDuration **${trackDuration}**\nProgress ${progress}\nLoop mode **${methods[queue.repeatMode]}**\nRequested by ${track.requestedBy}`)
+        .setDescription(`Volume **${queue.node.volume}**%\nDuration **${trackDuration}**\nProgress ${progress}\nLoop mode **${methods[queue.repeatMode]}**\nRequested by ${track.requestedBy}`)
         .setFooter({ text: 'Vai tu', iconURL: inter.member.avatarURL({ dynamic: true })})
         .setColor('ff0000')
         .setTimestamp()

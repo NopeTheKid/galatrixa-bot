@@ -39,7 +39,7 @@ module.exports = {
     }
     if (number) {
         const index = number - 1
-        const trackname = queue.tracks[index].title
+        const trackname = queue.tracks.data[index].title
         if (!trackname) return inter.reply({ content: `This track dose not seem to exist ${inter.member}...  try again ?❌`, ephemeral: true });   
         queue.node.skipTo(index);
         return inter.reply({ content: `Jumped to ${trackname}  ✅` });
