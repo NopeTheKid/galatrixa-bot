@@ -13,33 +13,30 @@ module.exports = {
             choices: [...Object.keys(require("discord-player").AudioFilters.filters).map(m => Object({ name: m, value: m })).splice(0, 25)],
         }
     ],
-
-
     async execute({ inter, client }) {
         const queue = player.nodes.get(inter.guildId);
 
         if (!queue || !queue.node.isPlaying()) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
 
-        const actualFilter = queue.getFiltersEnabled()[0];
+        const actualFilter = queue.filters.ffmpeg.getFiltersEnabled()[0];
 
         const infilter = inter.options.getString('filter');
 
-
         const filters = [];
 
-        queue.getFiltersEnabled().map(x => filters.push(x));
-        queue.getFiltersDisabled().map(x => filters.push(x));
+        queue.filters.ffmpeg.getFiltersEnabled().map(x => filters.push(x));
+        queue.filters.ffmpeg.getFiltersDisabled().map(x => filters.push(x));
 
         const filter = filters.find((x) => x.toLowerCase() === infilter.toLowerCase());
 
         if (!filter) return inter.reply({ content: `This filter doesn't exist ${inter.member}... try again ? ❌\n${actualFilter ? `Filter currently active ${actualFilter}.\n` : ''}List of available filters ${filters.map(x => `**${x}**`).join(', ')}.`, ephemeral: true });
 
-        const filtersUpdated = {};
+        //const filtersUpdated = {};
 
-        //filtersUpdated[filter] = queue.getFiltersEnabled().includes(filter) ? false : true;
+        //filtersUpdated[filter] = queue.filters.ffmpeg.getFiltersEnabled().includes(filter) ? false : true;
 
         await queue.filters.ffmpeg.toggle(filter);
 
-        inter.reply({ content: `The filter ${filter} is now **${queue.getFiltersEnabled().includes(filter) ? 'enabled' : 'disabled'}** ✅\n*Reminder the longer the music is, the longer this will take.*` });
+        inter.reply({ content: `The filter ${filter} is now **${queue.filters.ffmpeg.getFiltersEnabled().includes(filter) ? 'enabled' : 'disabled'}** ✅\n*Reminder the longer the music is, the longer this will take.*` });
     },
 };
