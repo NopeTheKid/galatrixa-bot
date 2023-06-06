@@ -17,10 +17,16 @@ module.exports = {
             palavraDia = item.content;
 
             let xmlDoc = new DOMParser().parseFromString(palavraDia,"text/html");
-            let xml = xmlDoc.getElementsByTagName("div")[0].childNodes[1].childNodes[1];
-            
-            // Gets length of the word to set the dimensions
-            let wordLength = xml.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].length;
+            let xml = xmlDoc.childNodes[0].childNodes[1].childNodes[1];
+
+            // Remove image
+            let img = xml.childNodes[7].childNodes[0]
+            xml.childNodes[7].removeChild(img);
+
+            // Gets length of the word to set the dimensions            
+            let word = xml.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[0];
+            let wordLength = word.length;
+            xml.childNodes[1].childNodes[1].childNodes[1].removeChild(xml.childNodes[1].childNodes[1].childNodes[1].childNodes[3]);
             let imgWidth = 500;
 
             if(wordLength * 17 > imgWidth)
@@ -85,7 +91,6 @@ module.exports = {
             .setTitle(`Palavra do Dia`)
             .setImage('attachment://palavraDia.png')
             .setTimestamp();
-			
 			try {
                 if(announce){
                     await channel.send({embeds: [embed], files: [file]})

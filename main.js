@@ -50,7 +50,7 @@ client.on('ready', client => {
 			 // Check if already posted
 			 if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds.length > 0 && embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
 				if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
-					 pDiaPosted = true;
+					pDiaPosted = true;
 				 }
 			 }
 			 // If not posted, post
