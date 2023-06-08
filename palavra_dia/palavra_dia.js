@@ -20,8 +20,8 @@ module.exports = {
             let xml = xmlDoc.childNodes[0].childNodes[1].childNodes[1];
 
             // Remove image
-            let img = xml.childNodes[7].childNodes[0]
-            xml.childNodes[7].removeChild(img);
+            let img = xml.lastChild.previousSibling.childNodes[0]
+            xml.lastChild.previousSibling.removeChild(img);
 
             // Gets length of the word to set the dimensions            
             let word = xml.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[0];
@@ -91,6 +91,7 @@ module.exports = {
             .setTitle(`Palavra do Dia`)
             .setImage('attachment://palavraDia.png')
             .setTimestamp();
+            
 			try {
                 if(announce){
                     await channel.send({embeds: [embed], files: [file]})
