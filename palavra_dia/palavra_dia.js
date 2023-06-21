@@ -20,8 +20,10 @@ module.exports = {
             let xml = xmlDoc.childNodes[0].childNodes[1].childNodes[1];
 
             // Remove image
-            let img = xml.lastChild.previousSibling.childNodes[0]
-            xml.lastChild.previousSibling.removeChild(img);
+            let img_elements = xml.getElementsByTagName("img")
+            for (index = img_elements.length - 1; index >= 0; index--) {
+                img_elements[index].parentNode.removeChild(img_elements[index]);
+            }
 
             // Gets length of the word to set the dimensions            
             let word = xml.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[0];
