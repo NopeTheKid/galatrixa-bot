@@ -23,7 +23,7 @@ module.exports = {
 			cmds = ""
 			commands.forEach(cmd => {
 				if((cmd.dir.toString().charAt(0).toUpperCase()+cmd.dir.slice(1)) == dir)
-					cmds = cmds + (`\t- \`${cmd.name}\`\n`)
+					cmds = cmds + (`- \`${cmd.name}\`\n`)
 			})
 			fields.push({ name: dir, value: cmds })
 		})
