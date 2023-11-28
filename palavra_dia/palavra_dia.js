@@ -17,6 +17,12 @@ module.exports = {
             palavraDia = item.content;
 
             let xmlDoc = new DOMParser().parseFromString(palavraDia,"text/html");
+
+            // remove extra word
+            let word_elements = xmlDoc.getElementsByClassName("varpb")
+            for (index = word_elements.length - 1; index >= 0; index--) {
+                word_elements[index].parentNode.removeChild(word_elements[index]);
+            }
             let xml = xmlDoc.childNodes[0].childNodes[1].childNodes[1];
 
             // Remove image
@@ -24,12 +30,13 @@ module.exports = {
             for (index = img_elements.length - 1; index >= 0; index--) {
                 img_elements[index].parentNode.removeChild(img_elements[index]);
             }
-
+            
             // Gets length of the word to set the dimensions            
-            let word = xml.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[0];
-            let wordLength = word.length;
-            xml.childNodes[1].childNodes[1].childNodes[1].removeChild(xml.childNodes[1].childNodes[1].childNodes[1].childNodes[3]);
+            let word = xmlDoc.getElementsByClassName("varpt");
+            let wordLength = word[0].childNodes[0].length;
+            
             let imgWidth = 500;
+            xml = xmlDoc;
 
             if(wordLength * 17 > imgWidth)
                 imgWidth = wordLength * 17;
@@ -60,6 +67,12 @@ module.exports = {
                 border-radius: 50%;
                 border: 1px solid #fff;
                 padding: 5px;
+            }
+
+            .dp-definicao-header {
+                font-size: 40px;
+                font-weight: bold;
+                text-transform: capitalize;
             }
             </style></head><body>`+xml+`</body>`;
         
@@ -119,7 +132,7 @@ module.exports = {
                         });
                     });
                 }else
-				await channel.send({embeds: embed, files: file});				
+				    await channel.send({embeds: embed, files: file});				
 			} catch (error) {
 				console.error("****************************************\nERROR : \n" + error + "****************************************")
 				this.sendPalavraDia(channel, announce)

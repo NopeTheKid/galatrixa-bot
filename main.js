@@ -3,6 +3,8 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const palavraDia = require('./palavra_dia/palavra_dia.js');
 const cron = require("node-cron");
 
+const DEBUG = 0;
+
 global.client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -21,14 +23,17 @@ global.player = new Player(client, client.config.opt.discordPlayer);
 require('./src/loader');
 require('./src/events');
 
-//client.on('debug', debug => {console.log(debug)})
+if(DEBUG)
+    client.on('debug', debug => {console.log(debug)})
 
 client.on('ready', client => {
 	/*
 	 *	PALAVRA DO DIA
 	 */
-	 let channel = client.channels.cache.get('872539780305526864');	// palavra-do-dia
-	 //let channel = client.channels.cache.get('773467416742330368'); // bot-test DEBUG
+    if(DEBUG)
+	    var channel = client.channels.cache.get('773467416742330368'); // bot-test DEBUG
+    else
+	    var channel = client.channels.cache.get('872539780305526864');	// palavra-do-dia
 		 
 	 // Create cron job por posting everyday at 8AM
 	 const cronDate = '00 08 * * *';
@@ -49,8 +54,8 @@ client.on('ready', client => {
 		 messages.forEach(message => {
 			 // Check if already posted
 			 if(Array.isArray(message.embeds) && message.embeds != undefined && message.embeds.length > 0 && embedHasImage(message.embeds[0]) && message.embeds[0].title == "Palavra do Dia"){
-				if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth()){
-					pDiaPosted = true;
+				if(message.createdAt.getDate() == today.getDate() && message.createdAt.getMonth() == today.getMonth() && !DEBUG){
+					//pDiaPosted = true;
 				 }
 			 }
 			 // If not posted, post
