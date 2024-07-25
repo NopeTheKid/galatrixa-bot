@@ -46,6 +46,7 @@ player.events.on('audioTrackAdd', async (queue, track) => {
 });
 
 player.events.on('disconnect', async (queue) => {
+	console.log("Disconnected...");
     await queue.metadata.inter.editReply({content: 'I was disconnected from the voice channel, clearing queue... ❌', embeds:[], components:[]});
 });
 

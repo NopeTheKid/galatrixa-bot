@@ -21,6 +21,8 @@ module.exports = {
             requestedBy: inter.member,
             searchEngine: QueryType.AUTO
         });
+		
+		//if(res.extractor.protocols.includes("youtube") || res.extractor.protocols.includes("spotify")) return inter.editReply({ content: `Can't use Youtube or Spotify at the moment, please use Soundcloud`, ephemeral: true });
 
         if (!res || !res.tracks.length) return inter.editReply({ content: `No results found ${inter.member}... try again ? ❌`, ephemeral: true });
 
