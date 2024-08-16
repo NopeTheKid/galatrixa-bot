@@ -16,7 +16,7 @@
         "@xmldom/xmldom": "^0.8.0",
         "common-tags": "^1.8.2",
         "discord-player": "^6.5.0",
-        "discord-player-youtubei": "^1.2.0-beta.3",
+        "discord-player-youtubei": "^1.2.6",
         "discord.js": "14.13",
         "html-dom-parser": "^5.0.4",
         "html-to-text": "^9.0.5",
