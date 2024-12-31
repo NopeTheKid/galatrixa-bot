@@ -41,7 +41,7 @@ client.on('ready', client => {
 	 *	PALAVRA DO DIA
 	 */
     if(DEBUG)
-	    var channel = client.channels.cache.get('773467416742330368'); // bot-test DEBUG
+	    var channel = client.channels.cache.get('1323639291640942672'); // bot-test DEBUG
     else
 	    var channel = client.channels.cache.get('872539780305526864');	// palavra-do-dia
 		 

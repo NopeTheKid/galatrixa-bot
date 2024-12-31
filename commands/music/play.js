@@ -1,4 +1,4 @@
-const { QueryType, useMasterPlayer } = require('discord-player');
+const { QueryType, useMainPlayer } = require('discord-player');
 const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
     name: 'play',
@@ -15,7 +15,7 @@ module.exports = {
 
     async execute({ inter }) {
 		await inter.deferReply();
-		const player = useMasterPlayer();
+		const player = useMainPlayer();
         const song = inter.options.getString('song');
         const res = await player.search(song, {
             requestedBy: inter.member,
@@ -50,6 +50,7 @@ module.exports = {
         await inter.editReply({ content:`Loading your ${res.playlist ? 'playlist' : 'track'}... 🎧`});
 
         res.playlist ? queue.addTrack(res.tracks) : queue.addTrack(res.tracks[0]);
+        
         if (!queue.node.isPlaying()) await queue.node.play();
     },
 };
