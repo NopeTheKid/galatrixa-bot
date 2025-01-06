@@ -1,0 +1,11 @@
+module.exports = async ({  inter }) => {
+    const queue = player.nodes.get(inter.guildId);
+
+    if (!queue || !queue.node.isPlaying()) return inter.reply({ content: `No music currently playing ${inter.member}... try again ? ❌`, ephemeral: true });
+
+    if (!queue.tracks.data[0]) return inter.reply({ content: `No music in the queue after the current one ${inter.member}... try again ? ❌`, ephemeral: true });
+
+    await queue.tracks.shuffle();
+
+    return inter.reply({ content:`Queue shuffled **${queue.tracks.size}** song(s) ! ✅`});
+}

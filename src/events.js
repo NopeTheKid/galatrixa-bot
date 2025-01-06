@@ -17,18 +17,23 @@ player.events.on('playerStart', async (queue, track) => {
     .setColor('#13f857')
 
     const skip = new ButtonBuilder()
-    .setLabel('Skip')
+    .setLabel('⏭️')
     .setCustomId(JSON.stringify({ffb: 'skip'}))
-    .setStyle('Primary')
+    .setStyle('Secondary')
 
     const resumepause = new ButtonBuilder()
-    .setLabel('Resume & Pause')
+    .setLabel('⏯️')
     .setCustomId(JSON.stringify({ffb: 'resume&pause'}))
-    .setStyle('Danger')
+    .setStyle('Secondary')
 
     const loop = new ButtonBuilder()
-    .setLabel('Loop')
+    .setLabel('🔁')
     .setCustomId(JSON.stringify({ffb: 'loop'}))
+    .setStyle('Secondary')
+
+    const shuffle = new ButtonBuilder()
+    .setLabel('🔀')
+    .setCustomId(JSON.stringify({ffb: 'shuffle'}))
     .setStyle('Secondary')
     
     const queuebutton = new ButtonBuilder()
@@ -36,7 +41,7 @@ player.events.on('playerStart', async (queue, track) => {
     .setCustomId(JSON.stringify({ffb: 'queue'}))
     .setStyle('Secondary')
 
-    const row1 = new ActionRowBuilder().addComponents(loop, resumepause, queuebutton, skip)
+    const row1 = new ActionRowBuilder().addComponents(resumepause, skip, loop, shuffle, queuebutton)
 	
     await queue.metadata.inter.editReply({content:"",embeds: [embed], components: [row1] })
 });

@@ -7,9 +7,9 @@ module.exports = {
     category: "galatrixa",
     description: "Galatrixa Book",
     async execute({inter}) {
-        let steam_page = await jsdom.JSDOM.fromURL("https://steamcommunity.com/id/siiiiiim");
+        let steam_page = await jsdom.JSDOM.fromURL("https://steamcommunity.com/profiles/76561198838319387");
         steam_page = steam_page.window.document;
-        let book = steam_page.getElementsByClassName("showcase_notes").item(0).innerHTML;
+        let book = steam_page.getElementsByClassName("customtext_showcase").item(0).innerHTML;
 
         let options={
             formatters:{},
