@@ -17,6 +17,4 @@ module.exports = async ({  inter, queue }) => {
     
     return inter.reply({ content: `loop made has been set to **${methods[queue.repeatMode]}**.✅`})
 
-
-
 }
