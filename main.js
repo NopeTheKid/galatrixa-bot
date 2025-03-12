@@ -1,8 +1,10 @@
 const { Player } = require('discord-player');
+const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require("discord-player-youtubei")
 const { Client, GatewayIntentBits } = require('discord.js');
 const palavraDia = require('./palavra_dia/palavra_dia.js');
 const cron = require("node-cron");
+globalThis.crypto ??= require("node:crypto").webcrypto
 
 const DEBUG = 0;
 
@@ -20,12 +22,9 @@ global.client = new Client({
 client.config = require('./config');
 
 global.player = new Player(client, client.config.opt.discordPlayer);
-global.player.extractors.loadDefault();
-global.player.extractors.register(YoutubeiExtractor, {
-	streamOptions: {
-		useClient: "ANDROID"
-	 }   
-});
+
+global.player.extractors.loadMulti(DefaultExtractors);
+global.player.extractors.register(YoutubeiExtractor, {});
 
 
 require('./src/loader');
@@ -33,8 +32,6 @@ require('./src/events');
 
 if(DEBUG)
     client.on('debug', debug => {console.log(debug)})
-
-global.player.extractors.loadDefault();
 
 client.on('ready', client => {
 	/*
